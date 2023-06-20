@@ -15,6 +15,7 @@ def args_parser():
     parser.add_argument('--model', type=str, default="cnn", help="model name")
     parser.add_argument('--bs', type=int, default=64, help="batch size")
     parser.add_argument('--lr', type=float, default=0.001, help="learning rate")
+    parser.add_argument('--loss', type=str, default="cross-entropy", help="loss function for local update")
 
 
     # other arguments
