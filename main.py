@@ -9,6 +9,7 @@ simplefilter(action='ignore', category=FutureWarning)
 simplefilter(action='ignore', category=UserWarning)
 
 import matplotlib
+
 matplotlib.use('Agg')
 
 from utils.sampling import mnist_nonidd, get_auxiliary_data
@@ -18,7 +19,8 @@ from models.federated import ground_truth_composition
 from models.update import LocalUpdate
 
 args = args_parser()
-args.device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() and args.gpu != -1 else 'cpu')
+# args.device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() and args.gpu != -1 else 'cpu')
+args.device = torch.device('mps') if torch.backends.mps.is_available() else 'cpu'
 
 print(args)
 
@@ -68,12 +70,13 @@ for round in range(args.epochs):
     # select clients for federated training
     m = max(int(args.frac * args.num_users), 1)
     selected_clients = np.random.choice(range(args.num_users), m, replace=False)
-    selected_clients_composition = ground_truth_composition(dict_clients, selected_clients, num_classes, dataset_for_train.targets)
+    selected_clients_composition = ground_truth_composition(dict_clients, selected_clients, num_classes,
+                                                            dataset_for_train.targets)
     print("The ground truth composition of each class is ", selected_clients_composition)
 
     for client in selected_clients:
-        client_side = LocalUpdate(args=args, dataset=dataset_for_train, idxs=dict_clients[client], alpha=ratio, size_average=False)
+        client_side = LocalUpdate(args=args, dataset=dataset_for_train, idxs=dict_clients[client], alpha=ratio,
+                                  size_average=False)
         client_side.train(model=copy.deepcopy(net_glob).to(args.device))
         break
     break
-
