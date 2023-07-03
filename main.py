@@ -15,12 +15,15 @@ matplotlib.use('Agg')
 from utils.sampling import mnist_nonidd, get_auxiliary_data
 from utils.options import args_parser
 from models.networks import LeNet5
-from models.federated import ground_truth_composition
+from models.federated import ground_truth_composition, FedAvg
 from models.update import LocalUpdate
+from models.evaluation import evaluate_model
 
 args = args_parser()
 # args.device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() and args.gpu != -1 else 'cpu')
+
 args.device = torch.device('mps') if torch.backends.mps.is_available() else 'cpu'
+args.gpu = -1
 
 print(args)
 
@@ -64,7 +67,7 @@ ratio = None
 # get auxiliary data for ratio estimation
 dict_classes, num_classes = get_auxiliary_data(dataset_for_train, args)
 
-for round in range(args.epochs):
+for round in range(args.rounds):
     w_locals, loss_locals, ac_locals, num_samples = [], [], [], []
 
     # select clients for federated training
@@ -77,6 +80,35 @@ for round in range(args.epochs):
     for client in selected_clients:
         client_side = LocalUpdate(args=args, dataset=dataset_for_train, idxs=dict_clients[client], alpha=ratio,
                                   size_average=False)
-        client_side.train(model=copy.deepcopy(net_glob).to(args.device))
-        break
-    break
+        w, loss, ac = client_side.train(model=copy.deepcopy(net_glob).to(args.device))
+        w_locals.append(copy.deepcopy(w))
+        loss_locals.append(copy.deepcopy(loss))
+        ac_locals.append(copy.deepcopy(ac))
+        num_samples.append(len(dict_clients[client]))
+
+    # ratio estimation
+    imt_model, imt_loss = [], []
+    auxiliary_classes = [i for i in range(len(dict_classes))]
+    for i in auxiliary_classes:
+        aux_client = LocalUpdate(args=args, dataset=dataset_for_train, idxs=dict_classes[i], alpha=ratio,
+                                 size_average=False)
+        imt_w, imt_loss, _ = aux_client.train(model=copy.deepcopy(net_glob).to(args.device))
+        imt_model.append(copy.deepcopy(imt_w))
+
+    # labelling process and updating global model
+    w_glob_last = copy.deepcopy(w_glob)
+    w_glob = FedAvg(w_locals)
+
+    net_glob.load_state_dict(w_glob)
+
+    # record round loss
+    loss_avg = sum(loss_locals) / len(loss_locals)
+    ac_avg = sum(ac_locals) / len(ac_locals)
+    print('Round {:3d}, Average loss {:.3f}, Accuracy {:.3f}\n'.format(round, loss_avg, ac_avg))
+    loss_train.append(loss_avg)
+
+    # evaluation
+    net_glob.eval()
+    acc_test, loss_test = evaluate_model(net_glob, dataset_for_test, args)
+
+

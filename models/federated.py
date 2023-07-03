@@ -1,4 +1,8 @@
+import copy
+
 import numpy as np
+import torch
+
 
 def ground_truth_composition(dict_clients, selected_clients, num_classes, labels):
     res = [0 for i in range(num_classes)]
@@ -11,3 +15,12 @@ def ground_truth_composition(dict_clients, selected_clients, num_classes, labels
                 if i_label == j_label:
                     res[j_label] += 1
     return res
+
+
+def FedAvg(w):
+    w_avg = copy.deepcopy(w[0])
+    for k in w_avg.keys():
+        for i in range(1, len(w)):
+            w_avg[k] += w[i][k]
+        w_avg[k] = torch.div(w_avg[k], len(w))
+    return w_avg
