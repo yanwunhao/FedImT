@@ -15,7 +15,7 @@ matplotlib.use('Agg')
 from utils.sampling import mnist_nonidd, get_auxiliary_data
 from utils.options import args_parser
 from models.networks import LeNet5
-from models.federated import ground_truth_composition, FedAvg
+from models.federated import ground_truth_composition, FedAvg, outlier_detect, imba_aware_monitoring
 from models.update import LocalUpdate
 from models.evaluation import evaluate_model
 
@@ -67,7 +67,7 @@ ratio = None
 # get auxiliary data for ratio estimation
 dict_classes, num_classes = get_auxiliary_data(dataset_for_train, args)
 
-for round in range(args.rounds):
+for g_round in range(args.rounds):
     w_locals, loss_locals, ac_locals, num_samples = [], [], [], []
 
     # select clients for federated training
@@ -86,7 +86,7 @@ for round in range(args.rounds):
         ac_locals.append(copy.deepcopy(ac))
         num_samples.append(len(dict_clients[client]))
 
-    # ratio estimation
+    # select "important" connections
     imt_model, imt_loss = [], []
     auxiliary_classes = [i for i in range(len(dict_classes))]
     for i in auxiliary_classes:
@@ -95,20 +95,27 @@ for round in range(args.rounds):
         imt_w, imt_loss, _ = aux_client.train(model=copy.deepcopy(net_glob).to(args.device))
         imt_model.append(copy.deepcopy(imt_w))
 
-    # labelling process and updating global model
+    pos = outlier_detect(w_glob, imt_model)
+
+    # aggregation
     w_glob_last = copy.deepcopy(w_glob)
     w_glob = FedAvg(w_locals)
+
+    # imbalance aware monitoring
+    total_samples = np.sum(num_samples)
+
+    pro_res_1, pro_res_2 = imba_aware_monitoring(imt_model, pos, w_glob_last, w_glob, num_classes, m, total_samples, args)
 
     net_glob.load_state_dict(w_glob)
 
     # record round loss
     loss_avg = sum(loss_locals) / len(loss_locals)
     ac_avg = sum(ac_locals) / len(ac_locals)
-    print('Round {:3d}, Average loss {:.3f}, Accuracy {:.3f}\n'.format(round, loss_avg, ac_avg))
+    print('Round {:3d}, Average loss {:.3f}, Accuracy {:.3f}\n'.format(g_round, loss_avg, ac_avg))
     loss_train.append(loss_avg)
+
+    break
 
     # evaluation
     net_glob.eval()
     acc_test, loss_test = evaluate_model(net_glob, dataset_for_test, args)
-
-
