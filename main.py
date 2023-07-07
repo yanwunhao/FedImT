@@ -105,6 +105,8 @@ for g_round in range(args.rounds):
     total_samples = np.sum(num_samples)
 
     pro_res_1, pro_res_2 = imba_aware_monitoring(imt_model, pos, w_glob_last, w_glob, num_classes, m, total_samples, args)
+    print(pro_res_1)
+    print(pro_res_2)
 
     net_glob.load_state_dict(w_glob)
 
@@ -113,8 +115,6 @@ for g_round in range(args.rounds):
     ac_avg = sum(ac_locals) / len(ac_locals)
     print('Round {:3d}, Average loss {:.3f}, Accuracy {:.3f}\n'.format(g_round, loss_avg, ac_avg))
     loss_train.append(loss_avg)
-
-    break
 
     # evaluation
     net_glob.eval()

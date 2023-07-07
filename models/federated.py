@@ -59,5 +59,53 @@ def calculate_neuron_importance(delta_weights):
     return pos_res
 
 
-def imba_aware_monitoring(cc_net, pos, w_glob_last, w_glob, num_class, num_users, num_samples, args):
-    return "a", "b"
+def imba_aware_monitoring(imt_model, pos, w_glob_last, w_glob, num_class, num_users, num_samples, args):
+    res_monitor = []
+    res_monitor_in = []
+
+    output_nodes_num = pos.shape[1]
+    last_layer_nodes_num = pos.shape[2]
+
+    for aux_class in range(num_class):
+        aux_sum = 0
+        aux_other_sum = 0
+        glob_sum = 0
+        layer = 1
+        res_buffer = []
+        for i in range(output_nodes_num):
+            for j in range(last_layer_nodes_num):
+                if pos[aux_class, i, j] == 1:
+                    delta = []
+                    previous = w_glob_last['fc3.weight'.format(layer)].cpu().numpy()[i, j]
+                    auxiliary = imt_model[aux_class]['fc3.weight'.format(layer)].cpu().numpy()[i, j]
+                    for p in range(len(imt_model)):
+                        delta.append(imt_model[p]['fc3.weight'.format(layer)].cpu().numpy()[i, j] - previous)
+
+                    delta = np.array(delta)
+                    delta_other = np.delete(delta, aux_class)
+                    delta_avg = np.sum(delta_other) / len(delta_other)
+                    aux_sum += auxiliary - previous
+                    aux_other_sum += delta_avg
+
+                    glob_delta = (w_glob['fc3.weight'.format(layer)].cpu().numpy()[i, j] - previous) * num_users * args.bs
+                    glob_sum += glob_delta
+
+                    res_estimation = (glob_delta - num_samples * delta_avg) / (auxiliary - previous - delta_avg)
+
+                    if 0 < res_estimation < num_samples * 1.5 / num_class:
+                        res_buffer.append(res_estimation)
+        if len(res_buffer) != 0:
+            res_monitor.append(np.mean(res_buffer))
+        else:
+            res_monitor.append(num_samples / num_class)
+
+        if aux_sum - aux_other_sum == 0:
+            res = 0
+        else:
+            res = (glob_sum - num_samples * aux_other_sum) / (aux_sum - aux_other_sum)
+        res_monitor_in.append(res)
+
+    res_monitor = np.array(res_monitor)
+    res_monitor_in = np.array(res_monitor_in)
+
+    return res_monitor, res_monitor_in
