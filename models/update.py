@@ -1,6 +1,9 @@
 import numpy as np
 import torch
 from torch.utils.data import DataLoader, Dataset
+from balanced_loss import Loss
+
+import os
 
 
 class DatasetSplit(Dataset):
@@ -17,10 +20,20 @@ class DatasetSplit(Dataset):
 
 
 class LocalUpdate(object):
-    def __init__(self, args, dataset, idxs, alpha, size_average):
+    def __init__(self, args, dataset, idxs, alpha, size_average, observation):
         self.args = args
         if self.args.loss == "cross-entropy":
             self.loss_fn = torch.nn.CrossEntropyLoss()
+        elif self.args.loss == "focal":
+            self.loss_fn = Loss(loss_type="focal_loss")
+        elif self.args.loss == "balanced-cross-entropy":
+            self.loss_fn = Loss(
+                loss_type="cross_entropy",
+                samples_per_class=observation,
+                class_balanced=True
+            )
+        else:
+            exit("No loss function specified")
         self.selected_clients = []
         self.ldr_train = DataLoader(DatasetSplit(dataset, idxs), batch_size=self.args.bs, shuffle=True)
 

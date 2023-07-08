@@ -20,9 +20,9 @@ from models.update import LocalUpdate
 from models.evaluation import evaluate_model
 
 args = args_parser()
-# args.device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() and args.gpu != -1 else 'cpu')
+args.device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() and args.gpu != -1 else 'cpu')
 
-args.device = torch.device('mps') if torch.backends.mps.is_available() else 'cpu'
+# args.device = torch.device('mps') if torch.backends.mps.is_available() else 'cpu'
 args.gpu = -1
 
 print(args)
@@ -67,6 +67,9 @@ ratio = None
 # get auxiliary data for ratio estimation
 dict_classes, num_classes = get_auxiliary_data(dataset_for_train, args)
 
+autoregressive_quantity_observation = []
+autoregressive_ratio_observation = []
+
 for g_round in range(args.rounds):
     w_locals, loss_locals, ac_locals, num_samples = [], [], [], []
 
@@ -77,9 +80,15 @@ for g_round in range(args.rounds):
                                                             dataset_for_train.targets)
     print("The ground truth composition of each class is ", selected_clients_composition)
 
+    if g_round == 0:
+        autoregressive_quantity_observation = [np.sum(selected_clients_composition) / num_classes for i in range(num_classes)]
+        autoregressive_ratio_observation = autoregressive_quantity_observation / np.sum(selected_clients_composition)
+    else:
+        autoregressive_quantity_observation = autoregressive_ratio_observation * np.sum(selected_clients_composition)
+
     for client in selected_clients:
         client_side = LocalUpdate(args=args, dataset=dataset_for_train, idxs=dict_clients[client], alpha=ratio,
-                                  size_average=False)
+                                  size_average=False, observation=autoregressive_quantity_observation)
         w, loss, ac = client_side.train(model=copy.deepcopy(net_glob).to(args.device))
         w_locals.append(copy.deepcopy(w))
         loss_locals.append(copy.deepcopy(loss))
@@ -91,7 +100,7 @@ for g_round in range(args.rounds):
     auxiliary_classes = [i for i in range(len(dict_classes))]
     for i in auxiliary_classes:
         aux_client = LocalUpdate(args=args, dataset=dataset_for_train, idxs=dict_classes[i], alpha=ratio,
-                                 size_average=False)
+                                 size_average=False, observation=autoregressive_quantity_observation)
         imt_w, imt_loss, _ = aux_client.train(model=copy.deepcopy(net_glob).to(args.device))
         imt_model.append(copy.deepcopy(imt_w))
 
@@ -105,10 +114,14 @@ for g_round in range(args.rounds):
     total_samples = np.sum(num_samples)
 
     pro_res_1, pro_res_2 = imba_aware_monitoring(imt_model, pos, w_glob_last, w_glob, num_classes, m, total_samples, args)
-    print(pro_res_1)
-    print(pro_res_2)
 
+    new_quantity_observation = pro_res_1.tolist()
+    new_ratio_observation = new_quantity_observation
+    autoregressive_ratio_observation = autoregressive_quantity_observation / total_samples
+    for i in range(len(autoregressive_quantity_observation)):
+        autoregressive_ratio_observation[i] = (1 - args.frac) * autoregressive_ratio_observation[i] + args.frac * new_ratio_observation[i]
     net_glob.load_state_dict(w_glob)
+
 
     # record round loss
     loss_avg = sum(loss_locals) / len(loss_locals)
