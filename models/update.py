@@ -3,7 +3,7 @@ import torch
 from torch.utils.data import DataLoader, Dataset
 from balanced_loss import Loss
 
-import os
+from .ghm import GHMC_Loss
 
 
 class DatasetSplit(Dataset):
@@ -32,6 +32,8 @@ class LocalUpdate(object):
                 samples_per_class=observation,
                 class_balanced=True
             )
+        elif self.args.loss == 'ghm':
+            self.loss_fn = GHMC_Loss(bins=10, alpha=0.75)
         else:
             exit("No loss function specified")
         self.selected_clients = []
@@ -75,13 +77,14 @@ class LocalUpdate(object):
                 if self.args.verbose:
                     print('Update Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(iter, batch_idx * len(images),
                                                                                     len(self.ldr_train.dataset),
-                                                                                    100. * batch_idx / len(self.ldr_train), loss.item()))
+                                                                                    100. * batch_idx / len(
+                                                                                        self.ldr_train), loss.item()))
 
                 batch_loss.append(loss.item())
                 batch_ac.append(ac)
                 batch_whole.append(whole)
 
-            epoch_ac.append(sum(batch_ac)/sum(batch_whole))
-            epoch_loss.append(sum(batch_loss)/len(batch_loss))
+            epoch_ac.append(sum(batch_ac) / sum(batch_whole))
+            epoch_loss.append(sum(batch_loss) / len(batch_loss))
 
         return model.state_dict(), sum(epoch_loss) / len(epoch_loss), sum(epoch_ac) / len(epoch_ac)
