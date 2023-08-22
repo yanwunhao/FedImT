@@ -147,14 +147,17 @@ for g_round in range(args.rounds):
     T_j = cosine_similarity(np.array(new_ratio_observation), selected_clients_composition)
     T_G = cosine_similarity(np.array(autoregressive_ratio_observation), global_ground_truth_composition_vector)
 
+    Tj_buffer.append(str(T_j) + " ")
+    TG_buffer.append(str(T_G) + " ")
+
     print("T_j Value: ", T_j)
     print("T_G Value: ", T_G)
 
-f_Tj = open("./Tj.txt", "w")
-f_TG = open("./TG.txt", "w")
+f_Tj = open("results/Tj_1.txt", "w")
+f_TG = open("results/TG_1.txt", "w")
 
-f_Tj.writelines(Tj_buffer.tolist())
-f_TG.writelines(TG_buffer.tolist())
+f_Tj.writelines(Tj_buffer)
+f_TG.writelines(TG_buffer)
 
 f_Tj.close()
 f_TG.close()
