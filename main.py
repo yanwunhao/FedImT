@@ -18,6 +18,7 @@ from models.networks import LeNet5
 from models.federated import ground_truth_composition, FedAvg, outlier_detect, imba_aware_monitoring
 from models.update import LocalUpdate
 from models.evaluation import evaluate_model
+from models.evaluation import cosine_similarity
 
 args = args_parser()
 args.device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() and args.gpu != -1 else 'cpu')
@@ -70,6 +71,12 @@ dict_classes, num_classes = get_auxiliary_data(dataset_for_train, args)
 autoregressive_quantity_observation = []
 autoregressive_ratio_observation = []
 
+global_ground_truth_composition_vector = np.array([1.0, 1.0, 1.0, 1.0, 1.0,
+                                                   1.0, 1.0, 1.0, 1.0, 1.0])
+
+Tj_buffer = []
+TG_buffer = []
+
 for g_round in range(args.rounds):
     w_locals, loss_locals, ac_locals, num_samples = [], [], [], []
 
@@ -115,11 +122,14 @@ for g_round in range(args.rounds):
 
     pro_res_1, pro_res_2 = imba_aware_monitoring(imt_model, pos, w_glob_last, w_glob, num_classes, m, total_samples, args)
 
+    estimated_total_samples = np.sum(pro_res_1)
     new_quantity_observation = pro_res_1.tolist()
-    new_ratio_observation = new_quantity_observation
+    new_ratio_observation = new_quantity_observation / estimated_total_samples
     autoregressive_ratio_observation = autoregressive_quantity_observation / total_samples
     for i in range(len(autoregressive_quantity_observation)):
         autoregressive_ratio_observation[i] = (1 - args.frac) * autoregressive_ratio_observation[i] + args.frac * new_ratio_observation[i]
+
+
     net_glob.load_state_dict(w_glob)
 
 
@@ -132,3 +142,19 @@ for g_round in range(args.rounds):
     # evaluation
     net_glob.eval()
     acc_test, loss_test = evaluate_model(net_glob, dataset_for_test, args)
+
+    # ratio estimation evaluation
+    T_j = cosine_similarity(np.array(new_ratio_observation), selected_clients_composition)
+    T_G = cosine_similarity(np.array(autoregressive_ratio_observation), global_ground_truth_composition_vector)
+
+    print("T_j Value: ", T_j)
+    print("T_G Value: ", T_G)
+
+f_Tj = open("./Tj.txt", "w")
+f_TG = open("./TG.txt", "w")
+
+f_Tj.writelines(Tj_buffer.tolist())
+f_TG.writelines(TG_buffer.tolist())
+
+f_Tj.close()
+f_TG.close()

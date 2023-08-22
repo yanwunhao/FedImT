@@ -1,11 +1,3 @@
-"""
-# -*- coding: utf-8 -*-
-# @File    : temp2.py
-# @Time    : 2020/12/30 3:03 上午
-# @Author  : xiaolu
-# @Email   : luxiaonlp@163.com
-# @Software: PyCharm
-"""
 import torch
 from torch import nn
 import torch.nn.functional as F

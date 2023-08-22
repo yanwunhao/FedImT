@@ -6,9 +6,9 @@ def args_parser():
 
     # federated arguments
     parser.add_argument('--iid', type=bool, default=False, help='whether i.i.d or not')
-    parser.add_argument('--num_users', type=int, default=100, help='number of federated participants')
+    parser.add_argument('--num_users', type=int, default=50, help='number of federated participants')
     parser.add_argument('--frac', type=float, default=0.3, help="the fraction of clients: C")
-    parser.add_argument('--rounds', type=int, default=100, help="total rounds")
+    parser.add_argument('--rounds', type=int, default=50, help="total rounds")
     parser.add_argument('--local_ep', type=int, default=5, help="local epoch for each round")
 
     # model arguments
