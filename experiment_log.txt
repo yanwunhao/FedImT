@@ -1,0 +1,811 @@
+/Users/rubieywh/miniforge3/envs/torch2_env/bin/python /Users/rubieywh/workspace/FedImbaTrack/main.py
+Namespace(bs=16, dataset='mnist', device=device(type='cpu'), frac=0.3, gpu=-1, iid=False, local_ep=5, loss='balanced-cross-entropy', lr=0.0001, model='cnn', num_users=50, rounds=50, verbose=False)
+LeNet5(
+  (conv1): Conv2d(1, 6, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+  (conv2): Conv2d(6, 16, kernel_size=(5, 5), stride=(1, 1))
+  (fc1): Linear(in_features=400, out_features=120, bias=True)
+  (fc2): Linear(in_features=120, out_features=84, bias=True)
+  (fc3): Linear(in_features=84, out_features=10, bias=True)
+)
+The ground truth composition of each class is  [1000, 1700, 823, 877, 1000, 900, 1000, 1300, 1351, 1449]
+Round   0, Average loss 2.276, Accuracy 0.218
+
+0.0000
+0.1700
+0.0000
+0.0000
+0.0000
+0.0291
+0.0000
+0.9757
+0.0092
+0.0000
+AUC Score: 0.524385, AUC Score New: 0.512833
+T_j Value:  0.9881033918779576
+T_G Value:  0.9969595465014953
+The ground truth composition of each class is  [1000, 1400, 800, 1000, 1000, 1000, 900, 1400, 1051, 1349]
+Round   1, Average loss 2.260, Accuracy 0.265
+
+0.0000
+0.1216
+0.0000
+0.0000
+0.0000
+0.0448
+0.0000
+0.9971
+0.0113
+0.0000
+AUC Score: 0.542557, AUC Score New: 0.511889
+T_j Value:  0.9831025866470963
+T_G Value:  0.9962849195544343
+The ground truth composition of each class is  [1200, 1000, 823, 1077, 1200, 1100, 800, 1400, 900, 1000]
+Round   2, Average loss 2.250, Accuracy 0.279
+
+0.0000
+0.0009
+0.0000
+0.0000
+0.0000
+0.1592
+0.0000
+0.9981
+0.0185
+0.0000
+AUC Score: 0.557814, AUC Score New: 0.510389
+T_j Value:  0.9774937169746584
+T_G Value:  0.9968810339151035
+The ground truth composition of each class is  [1400, 900, 700, 700, 1600, 817, 983, 1500, 900, 1500]
+Round   3, Average loss 2.223, Accuracy 0.291
+
+0.0327
+0.0000
+0.0000
+0.0000
+0.0071
+0.0224
+0.0000
+1.0000
+0.0411
+0.0000
+AUC Score: 0.594787, AUC Score New: 0.507056
+T_j Value:  0.9751026372264272
+T_G Value:  0.9903799193409598
+The ground truth composition of each class is  [1300, 800, 1100, 500, 1700, 1217, 483, 1200, 1100, 1500]
+Round   4, Average loss 2.204, Accuracy 0.328
+
+0.6469
+0.0000
+0.0000
+0.0000
+0.8452
+0.1738
+0.0000
+0.9484
+0.1540
+0.0000
+AUC Score: 0.622295, AUC Score New: 0.596889
+T_j Value:  0.9765494229388417
+T_G Value:  0.9898188724474631
+The ground truth composition of each class is  [1000, 1200, 1023, 1331, 546, 817, 1483, 1300, 1351, 1049]
+Round   5, Average loss 2.251, Accuracy 0.365
+
+0.9143
+0.0000
+0.0000
+0.0000
+0.2688
+0.0471
+0.0000
+0.9261
+0.8860
+0.1179
+AUC Score: 0.686536, AUC Score New: 0.618667
+T_j Value:  0.9762845181289367
+T_G Value:  0.9913232340079704
+The ground truth composition of each class is  [1100, 1700, 1200, 1154, 1346, 1200, 1135, 965, 751, 1249]
+Round   6, Average loss 2.208, Accuracy 0.383
+
+0.9439
+0.1075
+0.0300
+0.0000
+0.8758
+0.3363
+0.0000
+0.2023
+0.1314
+0.1933
+AUC Score: 0.740058, AUC Score New: 0.598278
+T_j Value:  0.9921515549098472
+T_G Value:  0.9977738722975793
+The ground truth composition of each class is  [1300, 700, 900, 654, 1746, 1000, 635, 1765, 800, 1100]
+Round   7, Average loss 2.075, Accuracy 0.451
+
+0.8684
+0.0000
+0.0000
+0.0000
+1.0000
+0.0000
+0.0000
+0.3551
+0.0000
+0.0000
+AUC Score: 0.651892, AUC Score New: 0.566556
+T_j Value:  0.936525553954074
+T_G Value:  0.9948536520299999
+The ground truth composition of each class is  [1700, 1200, 800, 754, 1746, 900, 935, 1165, 1200, 1200]
+Round   8, Average loss 1.905, Accuracy 0.399
+
+0.9847
+0.0000
+0.0000
+0.0000
+0.9980
+0.0000
+0.0000
+0.0000
+0.0000
+0.0000
+AUC Score: 0.653117, AUC Score New: 0.552500
+T_j Value:  0.9796414665013156
+T_G Value:  0.995827759996589
+The ground truth composition of each class is  [1100, 1700, 1000, 700, 1400, 1300, 500, 1200, 1100, 1600]
+Round   9, Average loss 1.737, Accuracy 0.406
+
+0.9939
+0.0000
+0.0000
+0.0000
+0.9532
+0.0168
+0.0000
+0.1576
+0.0000
+0.7691
+AUC Score: 0.700648, AUC Score New: 0.603500
+T_j Value:  0.9854463779976436
+T_G Value:  0.995569347769795
+The ground truth composition of each class is  [500, 1100, 1000, 954, 946, 1400, 935, 1465, 351, 1049]
+Round  10, Average loss 1.498, Accuracy 0.567
+
+0.0000
+0.0000
+0.0010
+0.0000
+0.6711
+0.9652
+0.0480
+0.8161
+0.0000
+0.8325
+AUC Score: 0.767744, AUC Score New: 0.624778
+T_j Value:  0.9805256443674792
+T_G Value:  0.9924718763946105
+The ground truth composition of each class is  [1500, 1500, 1123, 877, 1000, 1017, 1083, 1400, 1700, 1300]
+Round  11, Average loss 1.232, Accuracy 0.642
+
+0.9898
+0.8300
+0.3004
+0.0000
+0.7016
+0.0034
+0.8236
+0.8911
+0.8255
+0.8295
+AUC Score: 0.877837, AUC Score New: 0.792222
+T_j Value:  0.9612933596136222
+T_G Value:  0.9885507748205155
+The ground truth composition of each class is  [900, 1200, 1200, 900, 800, 600, 800, 1500, 900, 1600]
+Round  12, Average loss 0.847, Accuracy 0.814
+
+0.9286
+0.9551
+0.3866
+0.6851
+0.4297
+0.0000
+0.9697
+0.8911
+0.2823
+0.9386
+AUC Score: 0.893591, AUC Score New: 0.809667
+T_j Value:  0.9367220428384784
+T_G Value:  0.9869644927297305
+The ground truth composition of each class is  [1300, 1100, 1400, 1100, 1500, 1100, 600, 1300, 1200, 1400]
+Round  13, Average loss 0.702, Accuracy 0.832
+
+0.9602
+0.8317
+0.8275
+0.4347
+0.9226
+0.2209
+0.1493
+0.8482
+0.3778
+0.8850
+AUC Score: 0.906453, AUC Score New: 0.808722
+T_j Value:  0.9502622513428745
+T_G Value:  0.9821287480837911
+The ground truth composition of each class is  [1100, 1300, 1623, 777, 1300, 700, 1000, 1300, 1600, 1500]
+Round  14, Average loss 0.542, Accuracy 0.868
+
+0.7980
+0.9225
+0.9428
+0.0515
+0.8248
+0.0314
+0.1848
+0.8716
+0.5780
+0.8940
+AUC Score: 0.909876, AUC Score New: 0.790556
+T_j Value:  0.9500903797548987
+T_G Value:  0.9766657335248541
+The ground truth composition of each class is  [1400, 900, 700, 954, 946, 1100, 1200, 1400, 951, 749]
+Round  15, Average loss 0.446, Accuracy 0.873
+
+0.9643
+0.9498
+0.3023
+0.1594
+0.9511
+0.7220
+0.9175
+0.9144
+0.2402
+0.6670
+AUC Score: 0.918543, AUC Score New: 0.822222
+T_j Value:  0.8982791034398747
+T_G Value:  0.9660693797881679
+The ground truth composition of each class is  [1300, 1100, 1000, 1054, 1046, 1217, 883, 900, 951, 1449]
+Round  16, Average loss 0.443, Accuracy 0.874
+
+0.9571
+0.9718
+0.6676
+0.3505
+0.8422
+0.7769
+0.9186
+0.8638
+0.1191
+0.9058
+AUC Score: 0.926369, AUC Score New: 0.855667
+T_j Value:  0.9053663255727417
+T_G Value:  0.9703462180334472
+The ground truth composition of each class is  [900, 700, 1323, 1377, 1500, 900, 1100, 1300, 751, 1649]
+Round  17, Average loss 0.371, Accuracy 0.892
+
+0.9449
+0.9595
+0.8401
+0.8653
+0.9104
+0.2870
+0.9405
+0.8794
+0.4045
+0.8949
+AUC Score: 0.937225, AUC Score New: 0.889333
+T_j Value:  0.9047781673367687
+T_G Value:  0.9662553824396984
+The ground truth composition of each class is  [1200, 1300, 700, 1000, 1300, 1017, 1218, 1565, 200, 1200]
+Round  18, Average loss 0.305, Accuracy 0.910
+
+0.9592
+0.9833
+0.7500
+0.5356
+0.9308
+0.7152
+0.9384
+0.8891
+0.0010
+0.8543
+AUC Score: 0.918645, AUC Score New: 0.866611
+T_j Value:  0.9762049460228248
+T_G Value:  0.9732894976557728
+The ground truth composition of each class is  [1400, 1300, 623, 777, 1500, 717, 1083, 1200, 1000, 1200]
+Round  19, Average loss 0.307, Accuracy 0.911
+
+0.9755
+0.9815
+0.6783
+0.5822
+0.9481
+0.4753
+0.9363
+0.8911
+0.5934
+0.8672
+AUC Score: 0.943921, AUC Score New: 0.887722
+T_j Value:  0.9315563318289913
+T_G Value:  0.962443931363736
+The ground truth composition of each class is  [1200, 600, 1400, 700, 1200, 1217, 818, 1665, 700, 1400]
+Round  20, Average loss 0.297, Accuracy 0.908
+
+0.9663
+0.9471
+0.8876
+0.4277
+0.8921
+0.8296
+0.8361
+0.9134
+0.1335
+0.8672
+AUC Score: 0.935109, AUC Score New: 0.873944
+T_j Value:  0.902431685520323
+T_G Value:  0.9541506373888422
+The ground truth composition of each class is  [500, 1300, 1400, 1254, 1146, 1000, 1200, 900, 751, 1049]
+Round  21, Average loss 0.314, Accuracy 0.908
+
+0.8265
+0.9700
+0.9351
+0.7762
+0.9063
+0.6289
+0.9290
+0.8638
+0.5965
+0.8573
+AUC Score: 0.948013, AUC Score New: 0.907500
+T_j Value:  0.9153206527486044
+T_G Value:  0.9568546031165792
+The ground truth composition of each class is  [1300, 900, 900, 654, 1046, 1100, 900, 1200, 1100, 1600]
+Round  22, Average loss 0.291, Accuracy 0.910
+
+0.9847
+0.9463
+0.7762
+0.6554
+0.8686
+0.6771
+0.9040
+0.8687
+0.7967
+0.9386
+AUC Score: 0.952853, AUC Score New: 0.913389
+T_j Value:  0.8936976463270214
+T_G Value:  0.9705787185952723
+The ground truth composition of each class is  [1300, 1100, 1500, 1100, 1600, 1300, 735, 1265, 600, 1300]
+Round  23, Average loss 0.245, Accuracy 0.922
+
+0.9694
+0.9771
+0.9118
+0.3723
+0.9430
+0.8834
+0.7672
+0.9018
+0.0359
+0.8424
+AUC Score: 0.939574, AUC Score New: 0.868722
+T_j Value:  0.9367026235420497
+T_G Value:  0.9697589770594296
+The ground truth composition of each class is  [1700, 1200, 900, 1300, 1500, 1017, 1183, 1200, 700, 1300]
+Round  24, Average loss 0.250, Accuracy 0.920
+
+0.9867
+0.9833
+0.7829
+0.8515
+0.9613
+0.5942
+0.9186
+0.9144
+0.4240
+0.8157
+AUC Score: 0.954257, AUC Score New: 0.904500
+T_j Value:  0.9415007333904957
+T_G Value:  0.9651921893206383
+The ground truth composition of each class is  [1000, 1300, 1000, 800, 1000, 717, 1083, 1200, 1051, 1849]
+Round  25, Average loss 0.252, Accuracy 0.921
+
+0.9745
+0.9850
+0.8353
+0.7941
+0.7872
+0.6289
+0.9551
+0.8804
+0.7259
+0.9346
+AUC Score: 0.961626, AUC Score New: 0.918944
+T_j Value:  0.9109521623425462
+T_G Value:  0.9639870481253942
+The ground truth composition of each class is  [1200, 900, 1100, 1254, 1146, 1100, 1135, 1865, 800, 1100]
+Round  26, Average loss 0.247, Accuracy 0.921
+
+0.9847
+0.9753
+0.8672
+0.8792
+0.9155
+0.7007
+0.9248
+0.9426
+0.6181
+0.8038
+AUC Score: 0.958770, AUC Score New: 0.924833
+T_j Value:  0.9402647196971504
+T_G Value:  0.9598737500457237
+The ground truth composition of each class is  [1100, 1000, 1300, 1300, 1400, 717, 1318, 1565, 900, 700]
+Round  27, Average loss 0.220, Accuracy 0.931
+
+0.9745
+0.9648
+0.9002
+0.8376
+0.9562
+0.6267
+0.9509
+0.9368
+0.8224
+0.6957
+AUC Score: 0.962785, AUC Score New: 0.927778
+T_j Value:  0.9260794544008732
+T_G Value:  0.9587376418930397
+The ground truth composition of each class is  [900, 1400, 823, 1277, 600, 1000, 1100, 1200, 1100, 1600]
+Round  28, Average loss 0.222, Accuracy 0.929
+
+0.9786
+0.9868
+0.8556
+0.6990
+0.8513
+0.8128
+0.9426
+0.9222
+0.7823
+0.9029
+AUC Score: 0.966237, AUC Score New: 0.930722
+T_j Value:  0.9177205583763621
+T_G Value:  0.9605757990065683
+The ground truth composition of each class is  [900, 1400, 823, 777, 700, 900, 1700, 1100, 900, 1100]
+Round  29, Average loss 0.207, Accuracy 0.935
+
+0.9704
+0.9885
+0.8304
+0.6436
+0.8727
+0.8184
+0.9718
+0.9125
+0.7854
+0.8751
+AUC Score: 0.965435, AUC Score New: 0.926889
+T_j Value:  0.9227730988014193
+T_G Value:  0.9587493574831869
+The ground truth composition of each class is  [1100, 1400, 1000, 1154, 746, 700, 1600, 900, 700, 1700]
+Round  30, Average loss 0.208, Accuracy 0.935
+
+0.9765
+0.9894
+0.8440
+0.8515
+0.7841
+0.6558
+0.9718
+0.8589
+0.6848
+0.9425
+AUC Score: 0.966137, AUC Score New: 0.922111
+T_j Value:  0.9165335571266354
+T_G Value:  0.9540569732326288
+The ground truth composition of each class is  [1100, 700, 1223, 877, 1100, 1017, 918, 1365, 1200, 1300]
+Round  31, Average loss 0.215, Accuracy 0.934
+
+0.9796
+0.9612
+0.9225
+0.7495
+0.8931
+0.8262
+0.9071
+0.9261
+0.8522
+0.8811
+AUC Score: 0.966672, AUC Score New: 0.939667
+T_j Value:  0.8737881876120223
+T_G Value:  0.9459838290117593
+The ground truth composition of each class is  [1200, 900, 723, 577, 1300, 917, 983, 1600, 700, 1300]
+Round  32, Average loss 0.187, Accuracy 0.941
+
+0.9857
+0.9656
+0.8915
+0.5238
+0.9420
+0.8397
+0.9144
+0.9202
+0.7639
+0.8930
+AUC Score: 0.965548, AUC Score New: 0.925111
+T_j Value:  0.9193808152844424
+T_G Value:  0.9583843212571975
+The ground truth composition of each class is  [1300, 1400, 500, 700, 700, 1017, 1083, 1500, 1151, 1649]
+Round  33, Average loss 0.197, Accuracy 0.938
+
+0.9796
+0.9797
+0.7839
+0.6812
+0.8635
+0.8363
+0.9478
+0.9280
+0.8111
+0.9286
+AUC Score: 0.968753, AUC Score New: 0.930667
+T_j Value:  0.9649236077528811
+T_G Value:  0.9564113895424247
+The ground truth composition of each class is  [800, 1200, 900, 800, 1100, 900, 1100, 1100, 900, 900]
+Round  34, Average loss 0.182, Accuracy 0.944
+
+0.9714
+0.9841
+0.8779
+0.7624
+0.9420
+0.8386
+0.9624
+0.9407
+0.8275
+0.7879
+AUC Score: 0.971672, AUC Score New: 0.939333
+T_j Value:  0.9084344012500739
+T_G Value:  0.9460798738744873
+The ground truth composition of each class is  [1500, 800, 1300, 1000, 1400, 817, 1083, 1400, 1100, 1500]
+Round  35, Average loss 0.182, Accuracy 0.943
+
+0.9847
+0.9568
+0.8876
+0.8505
+0.9674
+0.6928
+0.9134
+0.9183
+0.8789
+0.8612
+AUC Score: 0.971465, AUC Score New: 0.941000
+T_j Value:  0.8777946615167398
+T_G Value:  0.9534317989542076
+The ground truth composition of each class is  [1500, 1100, 1000, 900, 1000, 900, 935, 1865, 600, 900]
+Round  36, Average loss 0.162, Accuracy 0.950
+
+0.9908
+0.9833
+0.8876
+0.8525
+0.9562
+0.8464
+0.8977
+0.9455
+0.5883
+0.8176
+AUC Score: 0.968715, AUC Score New: 0.932667
+T_j Value:  0.9390543826098033
+T_G Value:  0.963655605423557
+The ground truth composition of each class is  [1500, 1000, 923, 1177, 1000, 600, 1200, 1000, 1400, 1400]
+Round  37, Average loss 0.188, Accuracy 0.942
+
+0.9878
+0.9727
+0.8905
+0.8842
+0.9155
+0.6211
+0.9415
+0.9086
+0.8973
+0.9128
+AUC Score: 0.973417, AUC Score New: 0.942667
+T_j Value:  0.8426971240579123
+T_G Value:  0.9525699543883415
+The ground truth composition of each class is  [800, 1300, 1423, 1177, 1300, 1000, 835, 1465, 1151, 1349]
+Round  38, Average loss 0.204, Accuracy 0.939
+
+0.9684
+0.9736
+0.9622
+0.8624
+0.9216
+0.8700
+0.8800
+0.9241
+0.7947
+0.8523
+AUC Score: 0.971163, AUC Score New: 0.945889
+T_j Value:  0.8960669998277616
+T_G Value:  0.9534801409071472
+The ground truth composition of each class is  [1400, 1500, 1000, 800, 1000, 517, 1118, 1565, 1600, 1800]
+Round  39, Average loss 0.178, Accuracy 0.948
+
+0.9857
+0.9718
+0.8556
+0.8406
+0.8839
+0.5987
+0.9322
+0.9183
+0.9302
+0.9425
+AUC Score: 0.974115, AUC Score New: 0.938722
+T_j Value:  0.8734484499592173
+T_G Value:  0.9597088882296692
+The ground truth composition of each class is  [1400, 1200, 1323, 1477, 1300, 700, 1335, 1665, 700, 1400]
+Round  40, Average loss 0.173, Accuracy 0.947
+
+0.9888
+0.9877
+0.9273
+0.8871
+0.9511
+0.7791
+0.9405
+0.9377
+0.6037
+0.8385
+AUC Score: 0.971979, AUC Score New: 0.937278
+T_j Value:  0.9042167178577893
+T_G Value:  0.9658111116894856
+The ground truth composition of each class is  [1300, 1100, 1023, 677, 1100, 1217, 1218, 1965, 1100, 1200]
+Round  41, Average loss 0.159, Accuracy 0.952
+
+0.9867
+0.9815
+0.9138
+0.6792
+0.9379
+0.9204
+0.9207
+0.9504
+0.7485
+0.8712
+AUC Score: 0.973376, AUC Score New: 0.939944
+T_j Value:  0.9111264437526153
+T_G Value:  0.9630473073996167
+The ground truth composition of each class is  [500, 1100, 1523, 1077, 1400, 900, 1100, 1000, 1151, 849]
+Round  42, Average loss 0.174, Accuracy 0.948
+
+0.9673
+0.9762
+0.9535
+0.8198
+0.9409
+0.8453
+0.9457
+0.9047
+0.8994
+0.8910
+AUC Score: 0.976689, AUC Score New: 0.953167
+T_j Value:  0.8634258328066953
+T_G Value:  0.9655892424989401
+The ground truth composition of each class is  [1200, 600, 1000, 800, 1800, 1417, 718, 1865, 700, 1300]
+Round  43, Average loss 0.158, Accuracy 0.951
+
+0.9816
+0.9718
+0.9234
+0.6832
+0.9766
+0.9540
+0.8747
+0.9416
+0.5801
+0.8077
+AUC Score: 0.970913, AUC Score New: 0.928000
+T_j Value:  0.8856905688155406
+T_G Value:  0.9746485966547079
+The ground truth composition of each class is  [1100, 1200, 700, 854, 1646, 800, 800, 1200, 651, 849]
+Round  44, Average loss 0.156, Accuracy 0.953
+
+0.9888
+0.9841
+0.8731
+0.8119
+0.9786
+0.8509
+0.9092
+0.9407
+0.8522
+0.8266
+AUC Score: 0.977447, AUC Score New: 0.946056
+T_j Value:  0.9415867123486009
+T_G Value:  0.9701283689833495
+The ground truth composition of each class is  [900, 1700, 900, 800, 900, 1000, 1200, 900, 1000, 1300]
+Round  45, Average loss 0.151, Accuracy 0.953
+
+0.9837
+0.9930
+0.9109
+0.7634
+0.8717
+0.9193
+0.9468
+0.9027
+0.8070
+0.9346
+AUC Score: 0.977632, AUC Score New: 0.946778
+T_j Value:  0.9201521323720224
+T_G Value:  0.9649689349675523
+The ground truth composition of each class is  [1300, 1000, 800, 654, 1146, 1100, 1000, 1000, 1200, 1700]
+Round  46, Average loss 0.162, Accuracy 0.952
+
+0.9857
+0.9727
+0.8643
+0.7752
+0.9369
+0.8610
+0.9238
+0.8920
+0.9148
+0.9485
+AUC Score: 0.977424, AUC Score New: 0.949056
+T_j Value:  0.9019013404455334
+T_G Value:  0.9629732718258895
+The ground truth composition of each class is  [1000, 1300, 1000, 1300, 700, 917, 1218, 1565, 751, 849]
+Round  47, Average loss 0.152, Accuracy 0.953
+
+0.9806
+0.9868
+0.9012
+0.9376
+0.9134
+0.8419
+0.9635
+0.9523
+0.8142
+0.8781
+AUC Score: 0.978499, AUC Score New: 0.954833
+T_j Value:  0.9610260104621831
+T_G Value:  0.9688450157792088
+The ground truth composition of each class is  [1400, 1300, 1100, 1100, 1100, 600, 1000, 1100, 1500, 1600]
+Round  48, Average loss 0.146, Accuracy 0.957
+
+0.9867
+0.9806
+0.9012
+0.8673
+0.9318
+0.7175
+0.9280
+0.9056
+0.9466
+0.9247
+AUC Score: 0.979315, AUC Score New: 0.950889
+T_j Value:  0.8648654886886374
+T_G Value:  0.9554682625585339
+The ground truth composition of each class is  [800, 1000, 1423, 1877, 700, 900, 1100, 1600, 951, 949]
+Round  49, Average loss 0.138, Accuracy 0.959
+
+0.9816
+0.9868
+0.9448
+0.9455
+0.9216
+0.8453
+0.9499
+0.9436
+0.7957
+0.8722
+AUC Score: 0.977981, AUC Score New: 0.955889
+T_j Value:  0.8095014871959664
+T_G Value:  0.9588784099255989
+
+Process finished with exit code 0
