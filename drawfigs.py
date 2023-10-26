@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-with open("./results/Tj_1.txt", "r") as f1:
+with open("./results/TG_1.txt", "r") as f1:
     data1 = f1.read().split(" ")
 
-with open("./results/Tj_2.txt", "r") as f2:
+with open("./results/TG_2.txt", "r") as f2:
     data2 = f2.read().split(" ")
 
 curve1 = []
@@ -31,11 +31,12 @@ ax.plot(rounds, curve1, marker="o", label="standard mode")
 ax.plot(rounds, curve2, marker="o", label="n_latest mode")
 
 ax.set_xlim(1, 50)
+ax.set_ylim(0.5, 1.0)
 ax.set_xlabel('Global rounds')
-ax.set_ylabel('Tj score')
+ax.set_ylabel('TG score')
 ax.grid(True)
 
 plt.legend()
 plt.show()
 
-fig.savefig("Tj_score.eps", dpi=600, format="eps")
+fig.savefig("TG_score.eps", dpi=600, format="eps")

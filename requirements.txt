@@ -1,0 +1,6 @@
+balanced_loss==0.1.0
+matplotlib==3.7.1
+numpy==1.24.3
+scikit_learn==1.3.0
+torch==2.0.1
+torchvision==0.15.2
