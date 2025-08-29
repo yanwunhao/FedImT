@@ -20,7 +20,7 @@ def args_parser():
 
     # other arguments
     parser.add_argument('--dataset', type=str, default='mnist', help="name of dataset")
-    parser.add_argument('--gpu', type=int, default=0, help="GPU ID, -1 for CPU")
+    parser.add_argument('--gpu', type=int, default=0, help="GPU ID (0,1,2...), -1 for CPU")
     parser.add_argument('--verbose', action='store_true', help='verbose print')
 
     args = parser.parse_args()

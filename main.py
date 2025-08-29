@@ -14,6 +14,8 @@ matplotlib.use('Agg')
 
 from utils.sampling import mnist_nonidd, get_auxiliary_data
 from utils.options import args_parser
+from utils.device import get_device
+from utils.output_formatter import print_header, print_progress, print_round_summary, print_final_results
 from models.networks import LeNet5
 from models.federated import ground_truth_composition, FedAvg, outlier_detect, imba_aware_monitoring
 from models.update import LocalUpdate
@@ -21,12 +23,9 @@ from models.evaluation import evaluate_model
 from models.evaluation import cosine_similarity
 
 args = args_parser()
-args.device = torch.device('cuda:{}'.format(args.gpu) if torch.cuda.is_available() and args.gpu != -1 else 'cpu')
+args.device = get_device(args.gpu)
 
-# args.device = torch.device('mps') if torch.backends.mps.is_available() else 'cpu'
-args.gpu = -1
-
-print(args)
+print_header(args)
 
 if args.dataset == "mnist":
     # 0.1307 and 0.3081 were provided by officials
@@ -78,6 +77,8 @@ Tj_buffer = []
 TG_buffer = []
 
 for g_round in range(args.rounds):
+    print_progress(g_round, args.rounds)
+    
     w_locals, loss_locals, ac_locals, num_samples = [], [], [], []
 
     # select clients for federated training
@@ -85,7 +86,6 @@ for g_round in range(args.rounds):
     selected_clients = np.random.choice(range(args.num_users), m, replace=False)
     selected_clients_composition = ground_truth_composition(dict_clients, selected_clients, num_classes,
                                                             dataset_for_train.targets)
-    print("The ground truth composition of each class is ", selected_clients_composition)
 
     if g_round == 0:
         autoregressive_quantity_observation = [np.sum(selected_clients_composition) / num_classes for i in range(num_classes)]
@@ -136,7 +136,6 @@ for g_round in range(args.rounds):
     # record round loss
     loss_avg = sum(loss_locals) / len(loss_locals)
     ac_avg = sum(ac_locals) / len(ac_locals)
-    print('Round {:3d}, Average loss {:.3f}, Accuracy {:.3f}\n'.format(g_round, loss_avg, ac_avg))
     loss_train.append(loss_avg)
 
     # evaluation
@@ -150,8 +149,8 @@ for g_round in range(args.rounds):
     Tj_buffer.append(str(T_j) + " ")
     TG_buffer.append(str(T_G) + " ")
 
-    print("T_j Value: ", T_j)
-    print("T_G Value: ", T_G)
+    # Print comprehensive round summary
+    print_round_summary(g_round, loss_avg, ac_avg, acc_test, loss_test, T_j, T_G, selected_clients_composition)
 
 f_Tj = open("results/Tj_1.txt", "w")
 f_TG = open("results/TG_1.txt", "w")
@@ -161,3 +160,6 @@ f_TG.writelines(TG_buffer)
 
 f_Tj.close()
 f_TG.close()
+
+# Print final results summary
+print_final_results(Tj_buffer, TG_buffer)
